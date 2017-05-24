@@ -1,10 +1,17 @@
 #项目根目录下的文件夹，不需要/开头，需要/结尾
-.git/ .idea/ __pycache__/ logs/ static/
+.git/
+.idea/
+__pycache__/
+logs/
+static/
 #非项目根目录下的文件夹，需要/开头，需要/结尾
-/database*/
+/database*01/
 #项目根目录下的文件，不需要/开头，不需要/结尾
-test.py .gitignore .gitlogignore .DS_Store .python-version
+test.py
+.gitignore
+.gitlogignore
+.DS_Store
+.python-version
 #非项目根目录下的文件，需要/开头，不需要/结尾
 /bootstrap.css
 #特定后缀的文件，不需要/开头，不需要/结尾
-*.js *.sql
