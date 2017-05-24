@@ -12,6 +12,8 @@ test.py
 .gitlogignore
 .DS_Store
 .python-version
+countgitcode.py
 #非项目根目录下的文件，需要/开头，不需要/结尾
 /bootstrap.css
 #特定后缀的文件，不需要/开头，不需要/结尾
+*.js
