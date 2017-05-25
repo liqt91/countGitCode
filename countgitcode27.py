@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
-from sys import argv
+from sys import argv, version
+if version < "3":
+    from io import open
+    from commands import getstatusoutput as runcommand
+else:
+    from subprocess import getoutput as runcommand
 import os
-import subprocess
 import re
 import pypandoc
 import datetime
@@ -28,7 +32,7 @@ def getRelativePathOfPermittedFilesOrDirs(path):
 def readIgnorelist(file=".gitlogignore"):
     ignoredFileOrDirs = list()
     try:
-        with open(file,"r+",encoding="utf-8") as f:
+        with open(file,"rb+") as f:
             while True:
                 line = f.readline()
                 if line == '':
@@ -75,7 +79,9 @@ def countGitCode(since=0,until=0):
     paths = " ".join(paths)
     # paths = " ".join(getRelativePathOfPermittedFilesOrDirs(os.getcwd()))
     command_getauthors = "git log --pretty='%aN' | sort | uniq"
-    authors = subprocess.getoutput(command_getauthors)
+    authors = runcommand(command_getauthors)
+    if isinstance(authors,tuple):
+        authors = authors[1]
     authors = authors.split('\n')
     template_command_since_until = "git log --author='{0}' --pretty=tformat: --since={1} --until={2}.0am --shortstat -- {3}"
     template_command_since = "git log --author='{0}' --pretty=tformat: --since={1} --shortstat -- {2}"
@@ -101,8 +107,10 @@ def countGitCode(since=0,until=0):
         else:
             command_getcounts = template_command_since_until.format(author, since, until, paths)
         print(command_getcounts)
-        insertionsAndDeletions = subprocess.getoutput(command_getcounts)
-        # print(insertionsAndDeletions)
+        insertionsAndDeletions = runcommand(command_getcounts)
+        if isinstance(insertionsAndDeletions,tuple):
+            insertionsAndDeletions = insertionsAndDeletions[1]
+        print(insertionsAndDeletions)
         insertions = re.findall(r", (\d*) insertion[s]?\(\+\)",insertionsAndDeletions)
         total_insertation = sum([int(i) for i in insertions])
         deletions = re.findall(r", (\d*) deletion[s]?\(\-\)",insertionsAndDeletions)
