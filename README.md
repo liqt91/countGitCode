@@ -4,7 +4,9 @@
 本质上是git log这个命令，但是看文档该命令只支持文件夹／文件白名单。所以仿照.gitignore文件的形式建立黑名单，将不需要统计的文件或者文件夹填入.gitlogignore文件中即可。
 
 
-.gitlogignore文件格式
+
+
+附.gitlogignore文件格式
 
 __#*为通配符__
 
